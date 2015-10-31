@@ -1,0 +1,77 @@
+<% content_for :head do %>
+    <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?sensor=false" %>
+    <%= javascript_include_tag 'spree/backend/contact-us-gmaps.js' %>
+<% end %>
+
+<% content_for :page_title do %>
+    Contact Us Settings
+<% end %>
+
+<%= form_tag admin_contact_us_settings_path, method: :put do %>
+    <div class="row">
+      <div class="col-md-12" data-hook="reviews">
+        <div class="checkbox">
+          <%= label_tag :enabled do %>
+              <%= preference_field_tag :enabled, Spree::ContactUsSetting.new[:enabled], type: :boolean %>
+              <%= Spree.t(:show_contact_us_page) %>
+          <% end %>
+        </div>
+
+        <div class='col-md-6'>
+          <div class='form-group'>
+            <%= label_tag :phone_number %>
+            <%= preference_field_tag(:phone_number, Spree::ContactUsSetting.new[:phone_number], type: 'text') %>
+          </div>
+        </div>
+
+        <div class='col-md-6'>
+          <div class='form-group'>
+            <%= label_tag :email %>
+            <%= preference_field_tag(:email, Spree::ContactUsSetting.new[:email], type: 'text') %>
+          </div>
+        </div>
+
+        <div class='col-md-12'>
+          <div class='form-group'>
+            <%= label_tag :address %>
+            <%= preference_field_tag(:address, Spree::ContactUsSetting.new[:address], {type: 'text', :id => "address"}) %>
+          </div>
+        </div>
+
+
+        <div class='col-md-6'>
+          <div class='form-group'>
+            <%= label_tag :longitude %>
+            <%= preference_field_tag(:longitude, Spree::ContactUsSetting.new[:longitude], {type: 'text', :id => "map_lng"}) %>
+          </div>
+        </div>
+
+        <div class='col-md-6'>
+          <div class='form-group'>
+            <%= label_tag :latitude %>
+            <%= preference_field_tag(:latitude, Spree::ContactUsSetting.new[:latitude], {type: 'text', :id => "map_lat"}) %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h1 class="panel-title">
+                  Map
+                </h1>
+              </div>
+              <div class="panel-body">
+                <div id="map-canvas-0" class="map-canvas text-center" style="width: 900px; height: 400px" name="google-map-element"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-actions" data-hook="buttons">
+          <%= button Spree.t('actions.update'), 'update' %>
+        </div>
+      </div>
+    </div>
+<% end %>
